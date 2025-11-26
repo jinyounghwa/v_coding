@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>Supabase 로그인 예제</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+</head>
+<body>
+  <h2>로그인</h2>
+  <input type="email" id="email" placeholder="이메일" />
+  <input type="password" id="password" placeholder="비밀번호" />
+  <button onclick="login()">로그인</button>
+  <button onclick="signup()">회원가입</button>
+  <div id="result"></div>
+  <script>
+    // 여기에 본인의 supabase url과 anon key를 입력하세요
+    const SUPABASE_URL = 'https://YOUR_PROJECT.supabase.co';
+    const SUPABASE_ANON_KEY = 'YOUR_ANON_KEY';
+    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    async function login() {
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+      document.getElementById('result').innerText = error ? error.message : '로그인 성공!';
+    }
+
+    async function signup() {
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const { data, error } = await supabase.auth.signUp({ email, password });
+      document.getElementById('result').innerText = error ? error.message : '회원가입 성공! 이메일을 확인하세요.';
+    }
+  </script>
+</body>
+</html> 
